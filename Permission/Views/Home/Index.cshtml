@@ -1,0 +1,9 @@
+﻿@using Connecter.Models;
+@inject IList<Language> Languages
+@inject IHttpContextAccessor HttpAccessor
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language ?? Languages.FirstOrDefault(e => e.IsDefault).ShortName, out Dictionary<string, string> Resource);
+    ViewBag.Title = Resource.FirstOrDefault(e => e.Key == "HomePage").Value;
+}

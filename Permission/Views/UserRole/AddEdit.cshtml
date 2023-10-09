@@ -1,0 +1,86 @@
+﻿@model DTO.UserRole
+@using Connecter.Models;
+@using Permission.Helper
+@inject IHttpContextAccessor HttpAccessor
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language, out Dictionary<string, string> Resource);
+    ViewBag.Controller = "UserRole";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    @Html.Partial("_BreadcrumbAddEdit")
+    @using (Html.BeginForm("Save", "UserRole", FormMethod.Post))
+    {
+        <div class="ibox-content">
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-sm-1 control-label">
+                        @Html.Adaa_HiddenFor(e=>e.ID ,new {@class="form-control"})
+                        @Html.Adaa_HiddenFor(e=>e.CreationUserID)
+                        @Html.Adaa_HiddenFor(e=>e.CreationDate)
+                        <span class="help-block m-b-none"></span>
+                    </div>
+
+                </div>
+            </div> 
+            <div class="form-group">
+                <div class="row">
+                    <div>
+                        <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e=>e.Key=="ModuleID").Value</label></span>
+                        <span class="col-sm-3">
+                            @Html.Adaa_DropDownListFor(e=>e.ModuleID, ViewBag.listModule as SelectList,"/Module/AddEdit","/Module/GetAll",@Resource.FirstOrDefault(e=>e.Key=="SelectAction").Value, new {@class="form-control"})
+                            @Html.ValidationMessageFor(e=>e.ModuleID,"",new {@class="text-danger"})
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div>
+                        <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e=>e.Key=="UserID").Value</label></span>
+                        <span class="col-sm-3">
+                            @Html.Adaa_DropDownListFor(e=>e.UserID, ViewBag.listUser as SelectList,"/User/AddEdit","/User/GetAll",@Resource.FirstOrDefault(e=>e.Key=="SelectAction").Value, new {@class="form-control"})
+                            @Html.ValidationMessageFor(e=>e.UserID,"",new {@class="text-danger"})
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div>
+                        <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e=>e.Key=="RoleID").Value</label></span>
+                        <span class="col-sm-3">
+                            @Html.Adaa_DropDownListFor(e=>e.RoleID, ViewBag.listRole as SelectList,"/Role/AddEdit","/Role/GetAll",@Resource.FirstOrDefault(e=>e.Key=="SelectAction").Value, new {@class="form-control"})
+                            @Html.ValidationMessageFor(e=>e.RoleID,"",new {@class="text-danger"})
+                        </span>
+                    </div>
+                </div>
+            </div><br><br>
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-sm-12 col-sm-offset-9  col-md-12 col-md-offset-8  col-lg-4 col-lg-offset-8" style="margin-left:40%;">
+
+
+                        <span>
+                            <a href="@Url.Action("Index","UserRole")" class="btn btn-warning btn-circle  btn-outline ">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </span>
+
+                        <span>
+                            <button class="btn btn-success btn-circle  btn-outline" type="submit">
+                                <i class="fa fa-save"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    }
+</div>

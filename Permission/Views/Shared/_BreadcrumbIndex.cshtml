@@ -1,0 +1,25 @@
+﻿
+@inject IHttpContextAccessor HttpAccessor
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language, out Dictionary<string, string> Resource);
+}
+
+<div class="row wrapper border-bottom white-bg page-heading breadcrumb-text">
+    <div class="col-lg-10">
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">@Resource.FirstOrDefault(e => e.Key == "HomePage").Value</a>
+            </li>
+            <li>
+                <a>@Resource.FirstOrDefault(e => e.Key == ViewBag.NavbarName).Value</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>

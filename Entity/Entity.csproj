@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20230621080252_Initialize_21062023_1102.cs" />
+    <Compile Remove="Migrations\20230621080252_Initialize_21062023_1102.Designer.cs" />
+    <Compile Remove="Migrations\20230621082713_21062023_1127.cs" />
+    <Compile Remove="Migrations\20230621082713_21062023_1127.Designer.cs" />
+    <Compile Remove="Migrations\20230621141818_21062023_1718.cs" />
+    <Compile Remove="Migrations\20230621141818_21062023_1718.Designer.cs" />
+    <Compile Remove="Migrations\20230626074116_26062023_1040.cs" />
+    <Compile Remove="Migrations\20230626074116_26062023_1040.Designer.cs" />
+    <Compile Remove="Migrations\20230702074942_02072023_1049.cs" />
+    <Compile Remove="Migrations\20230702074942_02072023_1049.Designer.cs" />
+    <Compile Remove="Migrations\20230705065614_05072023_0956.cs" />
+    <Compile Remove="Migrations\20230705065614_05072023_0956.Designer.cs" />
+    <Compile Remove="ModuleProperties_Role.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

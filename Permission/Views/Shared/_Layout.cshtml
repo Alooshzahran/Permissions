@@ -1,0 +1,208 @@
+﻿@using Connecter.Models;
+@using Permission.Helper
+@using Newtonsoft.Json;
+@using System.Globalization;
+@inject IList<Language> Languages
+@inject IHttpContextAccessor HttpAccessor
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language ?? Languages.FirstOrDefault(l => l.IsDefault).ShortName, out Dictionary<string, string> Resource);
+    ViewBag.SystemName = Resource.FirstOrDefault(e => e.Key == "PermissionSystemName").Value;
+    CultureInfo cultureInfo = new CultureInfo(Language ?? Languages.FirstOrDefault(l => l.IsDefault).ShortName);
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.SystemName | @ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/plugins/dataTables/datatables.min.css" rel='stylesheet' type='text/css'>
+    <link href='~/Content/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    @if (cultureInfo.TextInfo.IsRightToLeft)
+    {
+        <link href='~/Content/plugins/bootstrap-rtl/bootstrap-rtl.css' rel='stylesheet' type='text/css'>
+        <link href="~/Content/onoffswitch-rtl.css" rel='stylesheet' type='text/css' />
+        <style>
+            .pagination {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .chosen-container-multi .chosen-choices li {
+                float: right !important;
+                font-weight: bold !important;
+            }
+
+            .right {
+                left: 0;
+                right: auto;
+            }
+        </style>
+    }
+    else
+    {
+        <link href="~/Content/onoffswitch-ltr.css" rel='stylesheet' type='text/css' />
+        <style>
+            .right {
+                right: 0;
+                left: auto;
+            }
+        </style>
+    }
+    <style>
+        .onoffswitch-inner:before {
+            content: '@Resource.FirstOrDefault(e => e.Key == "onoffswitch-onbutton").Value';
+        }
+
+        .onoffswitch-inner:after {
+            content: '@Resource.FirstOrDefault(e => e.Key == "onoffswitch-offbutton").Value';
+        }
+
+        .page-heading {
+            padding: 20px 10px !important;
+        }
+    </style>
+    <link href='~/Content/animate.css' rel='stylesheet' type='text/css'>
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css">
+    <link href="~/Scripts/plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+    <link href='~/fonts/font-awesome/css/font-awesome.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/iCheck/custom.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/datapicker/datepicker3.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/clockpicker/clockpicker.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/dropzone/basic.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/dropzone/dropzone.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/jasny/jasny-bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/select2/select2.min.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/chosen/bootstrap-chosen.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/sweetalert/sweetalert.css' rel='stylesheet' type='text/css'>
+    <link href='~/Content/plugins/steps/jquery.steps.css' rel='stylesheet' type='text/css'>
+    <link href="~/css/flag-icons.css" rel="stylesheet" />
+    <link href="~/css/adaafonts.css" rel="stylesheet" />
+    <style>
+        .popover.top {
+            z-index: 2050;
+        }
+
+        .nav-header {
+            padding: 33px 0px;
+        }
+    </style>
+
+
+</head>
+
+<body class="@(cultureInfo.TextInfo.IsRightToLeft? "rtls":"")">
+
+    <!-- Skin configuration box -->
+    @Html.Partial("_SkinConfig")
+
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+    <div id="wrapper" class="@Html.PageClass()">
+
+        <!-- Navigation -->
+        @Html.Partial("_Navigation")
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+
+            <!-- Top Navbar -->
+            @Html.Partial("_TopNavbar")
+
+            <!-- Main view  -->
+            @RenderBody()
+
+            <!-- Footer -->
+            @Html.Partial("_Footer")
+
+        </div>
+        <!-- End page wrapper-->
+        <!-- Right Sidebar -->
+        @Html.Partial("_RightSidebar")
+
+    </div>
+    <!-- End wrapper-->
+    <!-- Section for main scripts render -->
+    <!-- Skin config script - only for demo purpose-->
+
+</body>
+</html>
+<!-- Global Variable-->
+@{
+    var RecordData = JsonConvert.SerializeObject(Resource);
+    int x = 0;
+}
+<script>
+    var Resource = htmlDecode('@RecordData'.replace(/&quot;/g, '"').replace(/\t/g, ""));
+    Resource = JSON.parse(Resource);
+    function htmlDecode(str) {
+        const doc = new DOMParser().parseFromString(str, "text/html");
+        return doc.documentElement.textContent;
+    }
+</script>
+<!-- End Global Variable-->
+<script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/peity/jquery.peity.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/dataTables/datatables.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jeditable/jquery.jeditable.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/pace/pace.min.js"></script>
+<script type="text/javascript" src="~/Scripts/app/inspinia.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
+<script type="text/javascript" src="~/js/DeleteControl.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/dropzone/dropzone.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jasny/jasny-bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/steps/jquery.steps.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/js/initializeComponents.js"></script>
+<script src="~/js/refresh.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.dataTables-example').DataTable({
+            language: {
+                url: '@(Languages.FirstOrDefault(e => e.ShortName == cultureInfo.Name).DatatableUrl)',
+            },
+            pageLength: 25,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy' },
+                { extend: 'csv' },
+                { extend: 'excel', title: 'ExampleFile' },
+                { extend: 'pdf', title: 'ExampleFile' },
+                {
+                    extend: 'print',
+                    customize: function (win) {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+
+        });
+        initializeComponents();
+    });
+</script>
+

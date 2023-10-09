@@ -1,0 +1,167 @@
+﻿@using System.Globalization
+@using Connecter.Models;
+@inject IHttpContextAccessor HttpAccessor
+@inject IList<Language> Languages
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language ?? Languages.FirstOrDefault(l => l.IsDefault).ShortName, out Dictionary<string, string> Resource);
+    ViewBag.LogOutLabel = Resource.FirstOrDefault(e => e.Key == "LogOutLabel").Value;
+    CultureInfo cultureInfo = new CultureInfo(Language ?? Languages.FirstOrDefault(l => l.IsDefault).ShortName);
+}
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" method="post" action="">
+                <div class="form-group">
+                    <input type="text" placeholder="@Resource.FirstOrDefault(e=>e.Key == "searchText").Value" class="form-control input-text" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="nav-item-text">
+                <span class="m-r-sm text-muted welcome-message" data-i18n="topnav.welcometext">@Resource.FirstOrDefault(e=>e.Key == "welcomeText-Permission").Value</span>
+            </li>
+            <li class="dropdown nav-item-text">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="~/Images/a7.jpg">
+                            </a>
+                            <div class="media-body">
+                                <small class="pull-right">46h ago</small>
+                                <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                                <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="~/Images/a4.jpg">
+                            </a>
+                            <div class="media-body ">
+                                <small class="pull-right text-navy">5h ago</small>
+                                <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="~/Images/profile.jpg">
+                            </a>
+                            <div class="media-body ">
+                                <small class="pull-right">23h ago</small>
+                                <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="text-center link-block">
+                            <a href="#">
+                                <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown nav-item-text">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                <span class="pull-right text-muted small">12 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="text-center link-block">
+                            <a href="#">
+                                <strong>See All Alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown nav-item-text">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <i class="fi @(Languages.FirstOrDefault(e=>e.ShortName == cultureInfo.Name).Icon)"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    @{
+                        int itemCount = 0;
+                    }
+                    @foreach (var item in Languages.OrderBy(e => e.Name))
+                    {
+                        itemCount++;
+                        @if (cultureInfo.Name == item.ShortName)
+                        {
+                            <li>
+                                <a href="@Url.Action("Localization","Home",new {culture = item.ShortName})" style="background-color: #2f4050; color: white;">
+                                    <i class="fi @item.Icon bg-white"></i> @Resource.FirstOrDefault(e=>e.Key == item.Name).Value
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Localization","Home",new {culture = item.ShortName})">
+                                    <i class="fi @item.Icon bg-white"></i> @Resource.FirstOrDefault(e=>e.Key == item.Name).Value
+                                </a>
+                            </li>
+                        }
+                        if (itemCount % 2 == 1)
+                        {
+                            <li class="divider"></li>
+                        }
+                    }
+                </ul>
+            </li>
+            <li class="nav-item-text">
+                <a href="@Url.Action("SignOut","Login")">
+                    <i class="fa fa-sign-out"></i> @Resource.FirstOrDefault(e => e.Key == "LogOutLabel").Value
+                </a>
+            </li>
+            <li>
+                <a class="right-sidebar-toggle">
+                    <i class="fa fa-tasks"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

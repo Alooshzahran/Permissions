@@ -1,0 +1,82 @@
+﻿@model DTO.Module
+@using Connecter.Models;
+@using Permission.Helper
+@inject IHttpContextAccessor HttpAccessor
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language, out Dictionary<string, string> Resource);
+    ViewBag.Controller = "Module";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    @Html.Partial("_BreadcrumbAddEdit")
+    @using (Html.BeginForm("Save", "Module", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="ibox-content">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-1 control-label">
+                        @Html.Adaa_HiddenFor(e=>e.ID ,new {@class="form-control"})
+                        @Html.Adaa_HiddenFor(e=>e.CreationUserID)
+                        @Html.Adaa_HiddenFor(e=>e.CreationDate)
+                        <span class="help-block m-b-none"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+                    <div>
+                        <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e=>e.Key=="Name").Value</label></span>
+                        <span class="col-sm-3">
+                            @Html.Adaa_TextBoxFor(e=>e.Name,new {@class="form-control"})
+                            @Html.ValidationMessageFor(e=>e.Name,"",new {@class="text-danger"})
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+                    <div>
+                        <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e=>e.Key=="Url").Value</label></span>
+                        <span class="col-sm-3">
+                            @Html.Adaa_TextBoxFor(e=>e.Url,new {@class="form-control"})
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e=>e.Key=="File").Value</label></span><br>
+                    <span class="col-sm-3">
+                        <input type="file" accept=".exe,.dll" name="UploadFile">
+                        @*   <input type="file" name="file">*@
+                        @Html.ValidationMessageFor(e=>e.File,"",new {@class="text-danger"})
+                    </span>
+                </div>
+            </div>
+
+            <br><br>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12 col-sm-offset-9  col-md-12 col-md-offset-8  col-lg-4 col-lg-offset-8" style="margin-left:40%;">
+                        <span>
+                            <a href="@Url.Action("Index","Module")" class="btn btn-warning btn-circle  btn-outline ">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </span>
+
+                        <span>
+                            <button class="btn btn-success btn-circle  btn-outline" type="submit">
+                                <i class="fa fa-save"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

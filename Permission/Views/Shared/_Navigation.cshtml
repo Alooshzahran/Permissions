@@ -1,0 +1,39 @@
+﻿@using Connecter.Models;
+@using Permission.Helper
+@inject IHttpContextAccessor HttpAccessor
+@inject IList<Language> Languages
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language ?? Languages.FirstOrDefault(l => l.IsDefault).ShortName, out Dictionary<string, string> Resource);
+}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                @Html.Partial("_LoginPartial.cshtml")
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li class="@Html.IsSelected(controller: "Home") nav-item-text">
+                <a href="#"><i class="fa fa-group"></i> <span class="nav-label" data-i18n="nav.permission">@Resource.FirstOrDefault(e=>e.Key=="PermissionNavbar").Value</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Home", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "UserModulePermission")">@Resource.FirstOrDefault(e=>e.Key=="Permission-UserModulePermissionModel").Value</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Home") nav-item-text">
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label" data-i18n="nav.administrator">@Resource.FirstOrDefault(e=>e.Key=="AdministratorNavbar").Value</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Home", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Home")">@Resource.FirstOrDefault(e=>e.Key=="Administrator-HomeModel").Value</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Role")">@Resource.FirstOrDefault(e=>e.Key=="Administrator-RoleModel").Value</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "UserRole")">@Resource.FirstOrDefault(e=>e.Key=="Administrator-UserRolesModel").Value</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Module")">@Resource.FirstOrDefault(e=>e.Key=="Administrator-ModuleModel").Value</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "User")">@Resource.FirstOrDefault(e=>e.Key=="Administrator-UserModel").Value</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "ModuleProperties")">@Resource.FirstOrDefault(e=>e.Key=="Administrator-ModulePropertiesModel").Value</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

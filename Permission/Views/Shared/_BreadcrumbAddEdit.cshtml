@@ -1,0 +1,18 @@
+﻿@{
+    string ControllerName = ViewBag.Controller;
+}
+
+<div class="col-lg-10 breadcrumb-text">
+    <h2>@ViewBag.ModelName</h2>
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", ControllerName)">@ViewBag.LastTitle</a>
+        </li>
+
+        <li class="active">
+            <strong>@ViewBag.Title</strong>
+        </li>
+    </ol>
+</div>
+<div class="col-lg-2">
+</div>

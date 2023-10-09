@@ -1,0 +1,186 @@
+﻿@font-face {
+    font-family: 'dinbold';
+    src: url('../adaa_fonts/dinbold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'dinlight';
+    src: url('../adaa_fonts/dinlight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'dinnextltarabic-medium-2';
+    src: url('../adaa_fonts/dinnextltarabic-medium-2.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'dinnextltarabic-regular-2';
+    src: url('../adaa_fonts/dinnextltarabic-regular-2.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'dinnextltarabic-ultralight-3';
+    src: url('../adaa_fonts/dinnextltarabic-ultralight-3.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-black';
+    src: url('../adaa_fonts/montserrat-black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-blackitalic';
+    src: url('../adaa_fonts/montserrat-blackitalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-bold';
+    src: url('../adaa_fonts/montserrat-bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-bolditalic';
+    src: url('../adaa_fonts/montserrat-bolditalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-extrabold';
+    src: url('../adaa_fonts/montserrat-extrabold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-extrabolditalic';
+    src: url('../adaa_fonts/montserrat-extrabolditalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-extralight';
+    src: url('../adaa_fonts/montserrat-extralight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-extralightitalic';
+    src: url('../adaa_fonts/montserrat-extralightitalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-italic';
+    src: url('../adaa_fonts/montserrat-italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-light';
+    src: url('../adaa_fonts/montserrat-light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-lightitalic';
+    src: url('../adaa_fonts/montserrat-lightitalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-medium';
+    src: url('../adaa_fonts/montserrat-medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-mediumitalic';
+    src: url('../adaa_fonts/montserrat-mediumitalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-regular';
+    src: url('../adaa_fonts/montserrat-regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-semibold';
+    src: url('../adaa_fonts/montserrat-semibold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-semibolditalic';
+    src: url('../adaa_fonts/montserrat-semibolditalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-thin';
+    src: url('../adaa_fonts/montserrat-thin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'montserrat-thinitalic';
+    src: url('../adaa_fonts/montserrat-thinitalic.ttf') format('truetype');
+}
+
+.breadcrumb-text h2 {
+    font-family: montserrat-regular
+}
+
+.breadcrumb-text a {
+    font-family: montserrat-light
+}
+
+.breadcrumb-text strong {
+    font-family: montserrat-bold
+}
+
+.rtls .breadcrumb-text h2 {
+    font-family: dinnextltarabic-regular-2
+}
+
+.rtls .breadcrumb-text a {
+    font-family: dinnextltarabic-ultralight-3
+}
+
+.rtls .breadcrumb-text strong {
+    font-family: dinnextltarabic-medium-2
+}
+
+.profile-text span, .profile-text a {
+    font-family: montserrat-light
+}
+
+.rtls .profile-text span, .rtls .profile-text a {
+    font-family: dinnextltarabic-ultralight-3
+}
+
+.nav-item-text .nav-label, .nav-item-text .welcome-message {
+    font-family: montserrat-medium
+}
+
+.nav-item-text a {
+    font-family: montserrat-light
+}
+
+.rtls .nav-item-text .nav-label, .rtls .nav-item-text .welcome-message {
+    font-family: dinnextltarabic-medium-2
+}
+
+.rtls .nav-item-text a {
+    font-family: dinnextltarabic-ultralight-3
+}
+
+input, select, textarea, label {
+    font-family: montserrat-regular
+}
+
+.rtls input, .rtls select, .rtls textarea, .rtls label {
+    font-family: dinnextltarabic-regular-2
+}
+
+table tr th {
+    font-family: montserrat-regular
+}
+
+table tr td {
+    font-family: montserrat-regular
+}
+
+.rtls table tr th {
+    font-family: dinnextltarabic-regular-2
+}
+
+.rtls table tr td {
+    font-family: dinnextltarabic-regular-2
+}

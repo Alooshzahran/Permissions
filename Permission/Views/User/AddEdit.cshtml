@@ -1,0 +1,79 @@
+﻿@model DTO.User
+@using Connecter.Models;
+@using Permission.Helper
+@inject IHttpContextAccessor HttpAccessor
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language, out Dictionary<string, string> Resource);
+    ViewBag.Controller = "User";
+}
+@Html.Partial("_BreadcrumbAddEdit")
+<div class="row wrapper border-bottom white-bg page-heading">
+    @using (Html.BeginForm("Save", "User", FormMethod.Post))
+    {
+        <div class="ibox-content">
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-sm-1 control-label">
+                        @Html.Adaa_HiddenFor(e=>e.ID ,new {@class="form-control"})
+                        @Html.Adaa_HiddenFor(e=>e.IsActive ,new {@class="form-control"})
+                        @Html.Adaa_HiddenFor(e=>e.CreationUserID)
+                        @Html.Adaa_HiddenFor(e=>e.CreationDate)
+                        <span class="help-block m-b-none"></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+
+                    <div>
+                        <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e => e.Key =="Name").Value</label></span>
+                        <span class="col-sm-3">
+                            @Html.Adaa_TextBoxFor(e=>e.Name,new {@class="form-control"})
+                            @Html.ValidationMessageFor(e=>e.Name,"",new {@class="text-danger"})
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+                    <div>
+                        <span class="col-sm-1 sm-offset-1"><label class="control-label">@Resource.FirstOrDefault(e => e.Key =="Email").Value</label></span>
+                        <span class="col-sm-3">
+                            @Html.Adaa_TextBoxFor(e=>e.Email,new {@class="form-control"})
+                            @Html.ValidationMessageFor(e=>e.Email,"",new {@class="text-danger"})
+                        </span>
+                    </div>
+                </div>
+            </div><br><br>
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-sm-12 col-sm-offset-9  col-md-12 col-md-offset-8  col-lg-4 col-lg-offset-8" style="margin-left:40%;">
+
+
+                        <span>
+                            <a href="@Url.Action("Index","User")" class="btn btn-warning btn-circle  btn-outline ">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </span>
+
+                        <span>
+                            <button class="btn btn-success btn-circle  btn-outline" type="submit">
+                                <i class="fa fa-save"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    }
+</div>

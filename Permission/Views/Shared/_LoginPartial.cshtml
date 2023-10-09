@@ -1,0 +1,44 @@
+﻿@using Connecter.Models;
+@using Shared;
+@inject IHttpContextAccessor HttpAccessor
+@inject IList<Language> Languages
+@inject Dictionary<string,Dictionary<string,string>> ResourcesDic
+@{
+    HttpAccessor.HttpContext.Request.Cookies.TryGetValue("Language", out string Language);
+    ResourcesDic.TryGetValue(Language ?? Languages.FirstOrDefault(l => l.IsDefault).ShortName, out Dictionary<string, string> Resource);
+    ViewBag.LogOutLabel = Resource.FirstOrDefault(e => e.Key == "LogOutLabel").Value;
+}
+
+
+@if (Context.User.Identity.IsAuthenticated)
+{
+
+    var Image = "../Images/unknown.jpg";
+    if (@User.Claims.ToList().GetClaimValue("Picture") != null)
+    {
+        Image = User.Claims.ToList().GetClaimValue("Picture");
+    }
+
+    <div class="dropdown profile-element profile-text text-center">
+        <span>
+            <img alt="image" class="img-circle" src="@Image" />
+        </span>
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <span class="clear">
+                <span class="block m-t-xs">
+                    <strong>@User.Claims.ToList().GetClaimValue("Name")</strong>
+                    <br />
+                    <strong>@User.Claims.ToList().GetClaimValue("EmailAddress")</strong>
+                </span>
+                <span class="text-muted text-xs block">@User.Claims.ToList().GetClaimValue("Role") <b class="caret"></b></span>
+            </span>
+        </a>
+        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+            <li><a href="@Url.Action("Profile", "AppViews")">@Resource.FirstOrDefault(e => e.Key == "Profile").Value</a></li>
+            <li><a href="@Url.Action("Contacts", "AppViews")">@Resource.FirstOrDefault(e => e.Key == "Contacts").Value</a></li>
+            <li><a href="@Url.Action("Inbox", "Mailbox")">@Resource.FirstOrDefault(e => e.Key == "Mailbox").Value</a></li>
+            <li class="divider"></li>
+            <li><a href="@Url.Action("SignOut","Login")">@ViewBag.LogOutLabel</a></li>
+        </ul>
+    </div>
+}
